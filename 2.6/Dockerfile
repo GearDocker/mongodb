@@ -22,4 +22,4 @@ ADD mongod.conf /etc/mongod.conf
 
 EXPOSE 27017 28017
 
-CMD ["/run.sh"]
+CMD ["/run.sh","-b0.0.0.0"]
