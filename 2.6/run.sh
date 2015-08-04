@@ -12,7 +12,7 @@ if [ "$JOURNALING" == "no" ]; then
 fi
 
 if [ "$OPLOG_SIZE" != "" ]; then
-    cmd="$cmd --oplogSize $OPLOG_SIZE"
+    cmd="$cmd --oplogSize $OPLOG_SIZE  --bind_ip 0.0.0.0"
 fi
 
 $cmd &
