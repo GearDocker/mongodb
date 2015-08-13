@@ -1,16 +1,30 @@
 FROM ubuntu:14.04
-MAINTAINER Tutum Labs <support@tutum.co>
+MAINTAINER Gary Leong <gwleong@gmail.com>
 
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
-    echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list && \
-    apt-get update && \
-    apt-get install -y pwgen mongodb-org mongodb-org-server mongodb-org-shell mongodb-org-mongos mongodb-org-tools && \
-    echo "mongodb-org hold" | dpkg --set-selections && \
-    echo "mongodb-org-server hold" | dpkg --set-selections && \
-    echo "mongodb-org-shell hold" | dpkg --set-selections && \
-    echo "mongodb-org-mongos hold" | dpkg --set-selections && \
-    echo "mongodb-org-tools hold" | dpkg --set-selections
+RUN apt-get update && apt-get -y install \
+  build-essential \
+  git-core \
+  scons \
+  libssl-dev \
+  libboost-filesystem-dev \
+  libboost-program-options-dev \
+  libboost-system-dev \
+  libboost-thread-dev
 
+RUN mkdir -p /var/downloads \
+  && cd /var/downloads \
+  && git clone git://github.com/mongodb/mongo.git \
+  && cd /var/downloads/mongo \
+  && git checkout r2.6.5
+
+RUN mkdir -p /usr/local/bin
+RUN cd /var/downloads/mongo \
+ && scons mongod --64 --ssl -j8 --no-glibc-check --prefix=/usr/local \
+ && cp /var/downloads/mongo/build/linux2/64/ssl/mongo/mongod /usr/local/bin \
+ && rm -rf /var/downloads
+
+#RUN mkdir -p /data/db
+#RUN mkdir -p /var/log/mongo.log
 VOLUME /data/db
 
 ENV AUTH yes
@@ -18,8 +32,15 @@ ENV JOURNALING yes
 
 ADD run.sh /run.sh
 ADD set_mongodb_password.sh /set_mongodb_password.sh
-ADD mongod.conf /etc/mongod.conf
+
+#ADD mongod.conf /etc/mongod.conf
+#ENTRYPOINT ["/usr/local/bin/mongod", "--config", "/config/mongo.yaml"]
+
+# Cleanup
+RUN apt-get remove -y --purge git-core scons \
+    && apt-get autoremove -y --purge \
+    && apt-get clean autoclean \
+    && rm -rf /var/lib/{apt,dpkg,cache,lists} /tmp/* /var/tmp/*
 
 EXPOSE 27017 28017
-
 CMD ["/run.sh","-b0.0.0.0"]

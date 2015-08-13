@@ -1,6 +1,8 @@
 #!/bin/bash
 set -m
 
+#ENTRYPOINT ["/usr/local/bin/mongod", "--config", "/config/mongo.yaml"]
+
 mongodb_cmd="mongod"
 cmd="$mongodb_cmd --httpinterface --rest --master"
 if [ "$AUTH" == "yes" ]; then
@@ -22,3 +24,4 @@ if [ ! -f /data/db/.mongodb_password_set ]; then
 fi
 
 fg
+
