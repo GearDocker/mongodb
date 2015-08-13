@@ -1,5 +1,5 @@
-FROM ubuntu:14.04
-MAINTAINER Gary Leong <gwleong@gmail.com>
+FROM ubuntu
+MAINTAINER fernand.galiana@gmail.com
 
 RUN apt-get update && apt-get -y install \
   build-essential \
@@ -23,18 +23,11 @@ RUN cd /var/downloads/mongo \
  && cp /var/downloads/mongo/build/linux2/64/ssl/mongo/mongod /usr/local/bin \
  && rm -rf /var/downloads
 
-#RUN mkdir -p /data/db
-#RUN mkdir -p /var/log/mongo.log
-VOLUME /data/db
+RUN mkdir -p /data/db
+RUN mkdir -p /var/log/mongo.log
 
-ENV AUTH yes
-ENV JOURNALING yes
-
-ADD run.sh /run.sh
-ADD set_mongodb_password.sh /set_mongodb_password.sh
-
-#ADD mongod.conf /etc/mongod.conf
-#ENTRYPOINT ["/usr/local/bin/mongod", "--config", "/config/mongo.yaml"]
+EXPOSE 27017
+ENTRYPOINT ["/usr/local/bin/mongod", "--config", "/config/mongo.yaml"]
 
 # Cleanup
 RUN apt-get remove -y --purge git-core scons \
@@ -42,5 +35,3 @@ RUN apt-get remove -y --purge git-core scons \
     && apt-get clean autoclean \
     && rm -rf /var/lib/{apt,dpkg,cache,lists} /tmp/* /var/tmp/*
 
-EXPOSE 27017 28017
-CMD ["/run.sh","-b0.0.0.0"]
