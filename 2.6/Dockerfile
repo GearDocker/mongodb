@@ -13,7 +13,10 @@ MAINTAINER Gary Leong <gwleong@gmail.com>
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
     apt-get update && \
-    apt-get install -y pwgen wget curl && \
+    apt-get install -y pwgen wget curl git-core build-essential scons devscripts lintian dh-make \
+    libpcre3 libpcre3-dev libboost-dev libboost-date-time-dev libboost-filesystem-dev \
+    libboost-program-options-dev libboost-system-dev libboost-thread-dev \
+    libpcap-dev libreadline-dev libssl-dev rng-tools && \
     wget https://s3.amazonaws.com/jiffy-mongodb/mongodb-ssl_2.6.7_amd64.deb && \
     dpkg -i mongodb-ssl_2.6.7_amd64.deb
 
