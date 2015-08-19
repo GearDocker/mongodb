@@ -7,7 +7,7 @@ RET=1
 while [[ RET -ne 0 ]]; do
     echo "=> Waiting for confirmation of MongoDB service startup"
     sleep 5
-    mongo admin --eval "help" >/dev/null 2>&1
+    mongo --ssl admin --eval "help" >/dev/null 2>&1
     RET=$?
 done
 
@@ -20,7 +20,7 @@ touch /data/db/.mongodb_password_set
 echo "========================================================================"
 echo "You can now connect to this MongoDB server using:"
 echo ""
-echo "    mongo admin -u admin -p $PASS --host <host> --port <port>"
+echo "    mongo admin --ssl -u admin -p $PASS --host <host> --port <port>"
 echo ""
 echo "Please remember to change the above password as soon as possible!"
 echo "========================================================================"
