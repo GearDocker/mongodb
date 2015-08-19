@@ -20,6 +20,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
     wget https://s3.amazonaws.com/jiffy-mongodb/mongodb-ssl_2.6.7_amd64.deb && \
     dpkg -i mongodb-ssl_2.6.7_amd64.deb
 
+RUN openssl req -newkey rsa:2048 -new -x509 -days 1024 -nodes -out mongodb.crt -keyout mongodb.key && \
+    bash -c 'cat mongodb.crt mongodb.key > /etc/ssl/mongodb.pem'
+
 VOLUME /data/db
 
 ENV AUTH yes
