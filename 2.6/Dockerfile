@@ -14,7 +14,8 @@ MAINTAINER Gary Leong <gwleong@gmail.com>
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
     apt-get update && \
     apt-get install -y pwgen wget curl && \
-    wget https://s3.amazonaws.com/jiffy-mongodb/mongodb-ssl_2.6.7_amd64.deb
+    wget https://s3.amazonaws.com/jiffy-mongodb/mongodb-ssl_2.6.7_amd64.deb && \
+    dpkg -i mongodb-ssl_2.6.7_amd64.deb
 
 VOLUME /data/db
 
