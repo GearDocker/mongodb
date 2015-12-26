@@ -21,9 +21,12 @@ fi
 
 $cmd &
 
-if [ ! -f /data/db/.mongodb_password_set ]; then
-    /set_mongodb_password.sh
-fi
+sleep 60
+/set_mongodb_password.sh
+
+#if [ ! -f /data/db/.mongodb_password_set ]; then
+#    /set_mongodb_password.sh
+#fi
 
 fg
 
