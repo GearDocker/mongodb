@@ -54,9 +54,9 @@ Setting a specific password for the admin account
 -------------------------------------------------
 
 If you want to use a preset password instead of a randomly generated one, you can
-set the environment variable `MONGODB_PASS` to your specific password when running the container:
+set the environment variable `MONGO_PASS` to your specific password when running the container:
 
-        docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mypass" tutum/mongodb
+        docker run -d -p 27017:27017 -p 28017:28017 -e MONGO_PASS="mypass" tutum/mongodb
 
 You can now test your new admin password:
 

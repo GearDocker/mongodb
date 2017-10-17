@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PASS=${MONGODB_PASS:-$(pwgen -s 12 1)}
-_word=$( [ ${MONGODB_PASS} ] && echo "preset" || echo "random" )
+PASS=${MONGO_PASS:-$(pwgen -s 12 1)}
+_word=$( [ ${MONGO_PASS} ] && echo "preset" || echo "random" )
 
 RET=1
 while [[ RET -ne 0 ]]; do
