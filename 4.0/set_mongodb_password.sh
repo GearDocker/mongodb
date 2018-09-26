@@ -15,6 +15,16 @@ sleep 10
 
 echo 'rs.initiate()' | mongo admin --sslAllowInvalidCertificates --ssl 
 
+sleep 20
+
+RET=1
+while [[ RET -ne 0 ]]; do
+    echo "=> Waiting for confirmation of MongoDB service startup"
+    sleep 5
+    mongo --ssl admin --sslAllowInvalidCertificates --eval "help" > /dev/null 2>&1
+    RET=$?
+done
+
 echo "=> Creating an admin user with a ${_word} password in MongoDB"
 mongo admin --ssl --sslAllowInvalidCertificates --eval "db.createUser({user: 'admin', pwd: '$PASS', roles:[{role:'root',db:'admin'}]});"
 
