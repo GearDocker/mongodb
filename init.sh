@@ -1,8 +1,9 @@
 #!/bin/bash
 set -m
 
-mongodb_cmd="mongod --storageEngine $STORAGE_ENGINE"
-cmd="$mongodb_cmd --httpinterface --rest --master"
+mongodb_cmd="mongod"
+cmd="$mongodb_cmd --bind_ip 0.0.0.0 --replSet rs0 --sslMode requireSSL --sslPEMKeyFile /etc/ssl/mongodb.pem"
+
 if [ "$AUTH" == "yes" ]; then
     cmd="$cmd --auth"
 fi
@@ -13,12 +14,13 @@ fi
 
 if [ "$OPLOG_SIZE" != "" ]; then
     cmd="$cmd --oplogSize $OPLOG_SIZE"
+else
+    cmd="$cmd --oplogSize 256"
 fi
 
 $cmd &
 
-if [ ! -f /data/db/.mongodb_password_set ]; then
-    /set_mongodb_password.sh
-fi
+sleep 60
 
 fg
+
