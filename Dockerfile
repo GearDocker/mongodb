@@ -25,7 +25,9 @@ ADD init.sh /init.sh
 ADD set_mongodb_password.sh /set_mongodb_password.sh
 ADD mongod.conf /etc/mongod.conf
 
+# We use external volumes
 #RUN mkdir -p /data/db && /init.sh
+
 EXPOSE 27017 28017
 
 CMD ["/run.sh","-b0.0.0.0"]
