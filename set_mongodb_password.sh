@@ -1,7 +1,11 @@
 #!/bin/bash
 
-#PASS=${MONGODB_PASS:-$(pwgen -s 12 1)}
-#_word=$( [ ${MONGODB_PASS} ] && echo "preset" || echo "random" )
+export MONGODB_SET=${MONGODB_SET:=/root/db/.mongodb_set_password}
+
+if [ -f $MONGODB_SET ]; then
+    echo "mongodb password already set"
+    exit 0
+fi
 
 RET=1
 while [[ RET -ne 0 ]]; do
@@ -29,3 +33,5 @@ echo "    mongo admin --sslAllowInvalidCertificates --ssl -u admin -p $MONGODB_P
 echo ""
 echo "Please remember to change the above password as soon as possible!"
 echo "========================================================================"
+
+touch MONGODB_SET
