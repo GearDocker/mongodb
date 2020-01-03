@@ -22,6 +22,6 @@ $cmd &
 
 sleep 60
 
-exit(0)
+exit 0
 
 #fg
