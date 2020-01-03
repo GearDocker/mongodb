@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export MONGODB_SET=${MONGODB_SET:=/root/db/.mongodb_set_password}
+export MONGODB_SET=${MONGODB_SET:=/data/db/.mongodb_password_set}
 
 if [ -f $MONGODB_SET ]; then
     echo "mongodb password already set"
