@@ -25,8 +25,7 @@ ADD init.sh /init.sh
 ADD set_mongodb_password.sh /set_mongodb_password.sh
 ADD mongod.conf /etc/mongod.conf
 
-RUN mkdir -p /data/db && /init.sh
-
+#RUN mkdir -p /data/db && /init.sh
 EXPOSE 27017 28017
 
 CMD ["/run.sh","-b0.0.0.0"]
