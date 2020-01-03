@@ -26,4 +26,4 @@ echo ""
 echo "Please remember to change the above password as soon as possible!"
 echo "========================================================================"
 
-touch MONGODB_SET
+touch $MONGODB_SET
