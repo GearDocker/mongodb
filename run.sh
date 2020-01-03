@@ -2,7 +2,7 @@
 set -m
 
 mongodb_cmd="mongod"
-cmd="$mongodb_cmd --bind_ip 0.0.0.0 --replSet rs0 --sslMode requireSSL --sslPEMKeyFile /etc/ssl/mongodb.pem"
+cmd="$mongodb_cmd --bind_ip 0.0.0.0 --sslMode requireSSL --sslPEMKeyFile /etc/ssl/mongodb.pem"
 
 if [ "$AUTH" == "yes" ]; then
     cmd="$cmd --auth"
